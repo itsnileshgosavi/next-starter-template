@@ -1,8 +1,5 @@
 #!/usr/bin/env node
-
-import { execSync } from "child_process";
-import fs from "fs";
-import path from "path";
+import degit from "degit";
 
 const projectName = process.argv[2];
 
@@ -11,12 +8,21 @@ if (!projectName) {
   process.exit(1);
 }
 
-const targetPath = path.join(process.cwd(), projectName);
-fs.mkdirSync(targetPath, { recursive: true });
+// GitHub repo path: replace with your repo
+const repo = "itsnileshgosavi/next-starter-template";
 
-// Copy template files
-const templatePath = path.join(path.dirname(new URL(import.meta.url).pathname), "template");
-execSync(`cp -r ${templatePath}/* ${targetPath}`);
+const emitter = degit(repo, {
+  cache: false,
+  force: true,
+  verbose: true
+});
 
-console.log(`✅ Project ${projectName} created!`);
-console.log(`cd ${projectName} && npm install`);
+(async () => {
+  try {
+    await emitter.clone(projectName);
+    console.log(`✅ Project ${projectName} created!`);
+    console.log(`cd ${projectName} && pnpm install`);
+  } catch (err) {
+    console.error("❌ Failed to create project:", err);
+  }
+})();
