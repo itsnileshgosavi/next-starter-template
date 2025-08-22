@@ -1,7 +1,11 @@
 {
-  "name": "insta-automate",
+  "name": "create-next-starter-template",
+  "description": "A template for starting a new Next.js project",
   "version": "0.1.0",
   "private": true,
+  "bin": {
+    "create-next-starter-template": "./bin/index.js"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
