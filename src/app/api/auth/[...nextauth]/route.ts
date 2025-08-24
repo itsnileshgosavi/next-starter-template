@@ -3,22 +3,21 @@ import authOptions from "./authOptions";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    accessToken?: string;
-    refreshToken?: string;
     user: {
       id: string;
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      role?: string | null;
     };
   }
   
   interface JWT {
-    accessToken?: string;
-    refreshToken?: string;
     id?: string;
     name?: string | null;
     email?: string | null;
+    role?: string | null;
+    image?: string | null;
   }
   
   interface User {
@@ -26,6 +25,7 @@ declare module "next-auth" {
     name?: string | null;
     email?: string | null;
     image?: string | null;
+    role?: string | null;
   }
 }
 
