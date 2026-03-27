@@ -23,16 +23,19 @@ const authOptions: AuthOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
-        
+
         if (!user) {
           throw new Error("User not found");
         }
-        
+
         if (!user.password) {
           throw new Error("Invalid password");
         }
-        
-        const isValidPassword = await bcrypt.compare(credentials.password, user.password);
+
+        const isValidPassword = await bcrypt.compare(
+          credentials.password,
+          user.password,
+        );
         if (!isValidPassword) {
           throw new Error("Invalid password");
         }
@@ -41,7 +44,7 @@ const authOptions: AuthOptions = {
           name: user?.name ?? "",
           email: user?.email ?? "",
           image: user?.image ?? "",
-          role: user?.role as string | null ?? null,
+          role: (user?.role as string | null) ?? null,
         };
       },
     }),
@@ -69,7 +72,7 @@ const authOptions: AuthOptions = {
         }
         return true;
       }
-      return false;
+      return true;
     },
     async jwt({ token, account, user }) {
       // Initial sign in
